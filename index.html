@@ -12,14 +12,15 @@
 
   <!-- ============ NAV ============ -->
   <header class="nav">
-    <a href="#top" class="logo"><img src="images/hack%20hive%202.0%20logo.png" alt="HackHive 2.0"></a>
+    <a href="#top" class="logo">
+      <span class="logo-tab"><img src="images/hack%20hive%202.0%20logo.png" alt="HackHive 2.0"></span>
+    </a>
     <nav class="nav-links">
+      <a href="#top">home</a>
       <a href="#about">about</a>
       <a href="#timeline">timeline</a>
       <a href="#sponsors">sponsors</a>
-      <a href="#team">wizards</a>
-      <a href="#join-us">join us</a>
-      <a href="#agenda">past events</a>
+      <a href="team.html">wizards</a>
       <a href="https://hackhive.notion.site/Code-of-Conduct-HackHive-de29bb5a85cb4a9db647df7d75f649f7" target="_blank"
         rel="noopener">code of conduct</a>
       <a href="#" class="nav-cta">register</a>
@@ -208,20 +209,6 @@
 
   <!-- ============ BE A PART + SPONSORS ============ -->
   <section class="part-wrap" id="join-us">
-    <div class="part-left">
-      <h2 class="part-title">let's be a part :</h2>
-      <p class="part-sub">not a Hacker ?</p>
-      <div class="tile-grid">
-        <a href="#sponsors" class="tile">sponsors</a>
-        <a href="https://lu.ma/HACKHIVE-EVANGELIST" class="tile" target="_blank" rel="noopener">evangelist</a>
-      </div>
-      <a href="https://lu.ma/HACKHIVE-CP" class="tile tile-wide" target="_blank" rel="noopener">community partner</a>
-      <div class="tile-grid">
-        <a href="https://lu.ma/HackHive-Judges" class="tile" target="_blank" rel="noopener">judges</a>
-        <a href="https://lu.ma/HackHive-Mentors" class="tile" target="_blank" rel="noopener">mentors</a>
-      </div>
-    </div>
-
     <div class="part-right" id="sponsors">
       <h1>Sponsors ;</h1>
       <p>When you sponsor HackHive, you're not just placing your logo on a banner, you're associating your brand with
@@ -235,7 +222,6 @@
         <h4>our sponsors;</h4>
         <div class="sp-grid">
           <div class="sp-box sp-box--logo"><img src="images/logo.png" alt="SlotSet AI logo"></div>
-          <div class="sp-box"></div>
         </div>
       </div>
     </div>
@@ -310,32 +296,36 @@
           for some members.</p>
       </details>
       <details class="faq-item">
+        <summary>What is HackHive 2.0?</summary>
+        <p>HackHive 2.0 is a community hackathon by SDSF DAVV — a space to learn, network, build and have fun with
+          people who love tech as much as you do.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Who can participate?</summary>
+        <p>Anyone with curiosity for tech — students, professionals, designers and first-time hackers are all
+          welcome.</p>
+      </details>
+      <details class="faq-item">
+        <summary>How much does it cost?</summary>
+        <p>Nothing. Participation is completely free, including food, swag and workshops.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What is the team size?</summary>
+        <p>Teams of 2 to 4 members. You can also register solo and find teammates at the venue.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Do I need to know how to code?</summary>
+        <p>Not necessarily. Designers, product thinkers and no-code builders make great hackathon teammates.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What should I bring?</summary>
+        <p>Your laptop, charger, valid ID and a lot of enthusiasm. We handle the rest.</p>
+      </details>
+      <details class="faq-item">
         <summary>i have more questions, how and where can I reach out ?</summary>
         <p>you can reach out to us on our discord server in #🆘-ask-for-help channel or email us at
           hackhive26@gmail.com ! we're always ready to answer your questions.</p>
       </details>
-    </div>
-  </section>
-
-  <!-- ============ TEAM ============ -->
-  <section class="team" id="team">
-    <h2>&lsaquo; meet the beekeepers &rsaquo;</h2>
-    <div class="team-row">
-      <div class="team-card">
-        <span class="role">Head of department</span>
-        <div class="photo"></div>
-        <div class="name-row"><span>Dr. Govind Maheshwari</span><a href="#" aria-label="LinkedIn">in</a></div>
-      </div>
-      <div class="team-card">
-        <span class="role">faculty coordinator</span>
-        <div class="photo"></div>
-        <div class="name-row"><span>Dr. Vandit Hedau</span><a href="#" aria-label="LinkedIn">in</a></div>
-      </div>
-      <div class="team-card">
-        <span class="role">faculty coordinator</span>
-        <div class="photo"></div>
-        <div class="name-row"><span>Dr. Shishir Kumar Shandilya</span><a href="#" aria-label="LinkedIn">in</a></div>
-      </div>
     </div>
   </section>
 
@@ -362,6 +352,33 @@
     </p>
     <p class="copy">&copy; Hack Hive. all rights reserved &nbsp;&mdash;&nbsp; team SDSF DAVV &#10084;</p>
   </footer>
+
+  <!-- ============ NOTIFICATIONS ============ -->
+  <div class="notify-wrap">
+    <div class="notify-panel" id="notifyPanel">
+      <div class="notify-header">
+        <span>$ latest <b>announcements;</b></span>
+        <button class="notify-close" id="notifyClose" aria-label="Close announcements">&times;</button>
+      </div>
+      <div class="notify-list">
+        <div class="notify-item">
+          <span class="notify-date">&#128227; Aug 26, 2026</span>
+          <p>Problem Statement Workshop goes live on YouTube, 7:00pm - 8:00pm.</p>
+        </div>
+        <div class="notify-item">
+          <span class="notify-date">&#128227; Aug 20, 2026</span>
+          <p>Community SyncUp call on Discord, 9:00 PM.</p>
+        </div>
+        <div class="notify-item">
+          <span class="notify-date">&#128227; Apr 03, 2026</span>
+          <p>Registrations are officially open — grab your spot before it's too late!</p>
+        </div>
+      </div>
+    </div>
+    <button class="notify-btn" id="notifyBtn" aria-label="Show announcements">
+      &#128276;<span class="notify-badge" id="notifyBadge">3</span>
+    </button>
+  </div>
 
   <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">&#8593;</button>
 

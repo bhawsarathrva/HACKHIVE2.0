@@ -106,7 +106,7 @@ const SOCIALS = [
   { label: "Twitter", href: "#", icon: "𝕏" },
   { label: "Instagram", href: "https://www.instagram.com/hack_hive26?igsh=MXVyMG4ycWZtNTcxeA==", icon: "📷" },
   { label: "LinkedIn", href: "#", icon: "in" },
-  { label: "Discord", href: "#", icon: "🎮" },
+  { label: "Discord", href: "https://discord.gg/z5pjHmMFz", icon: "🎮" },
   { label: "Email", href: "mailto:hackhive26@gmail.com", icon: "✉" },
 ];
 
