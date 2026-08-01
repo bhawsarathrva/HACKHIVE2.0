@@ -67,6 +67,8 @@ body.custom-cursor-active, body.custom-cursor-active *{ cursor:none !important; 
 .btn:hover{ transform:translateY(-2px); box-shadow:0 8px 20px rgba(0,0,0,.25); }
 .btn-dark{ background:#111; color:#fff; }
 .btn-light{ background:#eee; color:#111; }
+.btn-social{ padding:12px 20px; }
+.btn-social svg{ flex-shrink:0; }
 
 /* ============ NAV ============ */
 .nav{
