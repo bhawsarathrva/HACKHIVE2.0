@@ -17,15 +17,6 @@ window.addEventListener('scroll', () => {
   scrollTopBtn?.classList.toggle('visible', window.scrollY > 400);
 }, { passive: true });
 
-// ============ Problem statement slider ============
-const psTrack = document.getElementById('psTrack');
-document.getElementById('psPrev')?.addEventListener('click', () => {
-  psTrack?.scrollBy({ left: -300, behavior: 'smooth' });
-});
-document.getElementById('psNext')?.addEventListener('click', () => {
-  psTrack?.scrollBy({ left: 300, behavior: 'smooth' });
-});
-
 // ============ Custom cursor ============
 (function () {
   if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
@@ -68,24 +59,6 @@ document.getElementById('psNext')?.addEventListener('click', () => {
     el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
   });
 })();
-
-// ============ Notifications ============
-const notifyBtn = document.getElementById('notifyBtn');
-const notifyPanel = document.getElementById('notifyPanel');
-const notifyClose = document.getElementById('notifyClose');
-const notifyBadge = document.getElementById('notifyBadge');
-
-notifyBtn?.addEventListener('click', (e) => {
-  e.stopPropagation();
-  notifyPanel?.classList.toggle('open');
-  notifyBadge?.classList.add('hidden');
-});
-notifyClose?.addEventListener('click', () => notifyPanel?.classList.remove('open'));
-document.addEventListener('click', (e) => {
-  if (notifyPanel?.classList.contains('open') && !notifyPanel.contains(e.target) && e.target !== notifyBtn) {
-    notifyPanel.classList.remove('open');
-  }
-});
 
 // ============ Registration status pill ============
 (function () {
