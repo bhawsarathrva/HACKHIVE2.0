@@ -12,9 +12,7 @@
 
   <!-- ============ NAV ============ -->
   <header class="nav">
-    <a href="#top" class="logo">
-      <span class="logo-tab"><img src="images/hack%20hive%202.0%20logo.png" alt="HackHive 2.0"></span>
-    </a>
+    <div class="logo" aria-hidden="true"></div>
     <nav class="nav-links">
       <a href="#top">home</a>
       <a href="#about">about</a>
@@ -30,6 +28,9 @@
 
   <!-- ============ HERO ============ -->
   <section class="hero" id="top">
+    <a href="#top" class="logo-tab" aria-label="HackHive 2.0 home">
+      <img src="images/hack%20hive%202.0%20logo.png" alt="HackHive 2.0">
+    </a>
     <div class="hero-bg-dots"></div>
     <div class="school-row">
       <div class="school-badge">
@@ -63,7 +64,8 @@
         <span>&#128205; SDSF DAVV, INDORE (M.P.)</span>
       </div>
 
-      <div class="status-pill"><span class="dot" aria-hidden="true"></span>registrations open</div>
+      <div class="status-pill" id="regStatusPill"><span class="dot" aria-hidden="true"></span><span
+          id="regStatusText">registrations open</span></div>
 
       <div class="countdown" id="countdown">
         <div class="count-box"><span class="count-value" id="cdDays">00</span><span class="count-label">days</span>
@@ -385,12 +387,13 @@
     <div class="more-info">
       <a href="https://hackhive.notion.site/Code-of-Conduct-HackHive-de29bb5a85cb4a9db647df7d75f649f7" target="_blank"
         rel="noopener">code of conduct</a>
-      <a href="#">community guidelines</a>
+      <a href="https://docs.google.com/document/d/1-Clrg_8v2OHHM0S5AVqMUmdfW7dDfDx_dBHJ10IE7RU/edit?usp=sharing">community
+        guidelines</a>
       <a href="https://forms.gle/qydHSrK3XY4n8Q3P8" target="_blank" rel="noopener">call for sponsors</a>
     </div>
     <h2>contact.</h2>
     <p class="contact-line">
-      <a href="mailto:hackhive26@gmail.com">hackhive26@gmail.com</a>
+      <a href="mailto:hackhive2.26@gmail.com">hackhive2.26@gmail.com</a>
       &nbsp;|&nbsp;
       <a href="https://maps.app.goo.gl/qH2WpSDHE5KNR76Z7" target="_blank" rel="noopener">SDSF DAVV</a>
     </p>
