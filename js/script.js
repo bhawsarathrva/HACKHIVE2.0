@@ -17,6 +17,15 @@ window.addEventListener('scroll', () => {
   scrollTopBtn?.classList.toggle('visible', window.scrollY > 400);
 }, { passive: true });
 
+// ============ Problem statement slider ============
+const psTrack = document.getElementById('psTrack');
+document.getElementById('psPrev')?.addEventListener('click', () => {
+  psTrack?.scrollBy({ left: -300, behavior: 'smooth' });
+});
+document.getElementById('psNext')?.addEventListener('click', () => {
+  psTrack?.scrollBy({ left: 300, behavior: 'smooth' });
+});
+
 // ============ Custom cursor ============
 (function () {
   if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
