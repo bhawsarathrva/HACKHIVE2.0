@@ -60,27 +60,6 @@ window.addEventListener('scroll', () => {
   });
 })();
 
-// ============ Registration status pill ============
-(function () {
-  const pill = document.getElementById('regStatusPill');
-  const text = document.getElementById('regStatusText');
-  if (!pill || !text) return;
-
-  const regOpen = new Date('2026-08-03T00:00:00');
-  const regClose = new Date('2026-08-31T23:59:59');
-  const now = new Date();
-
-  if (now < regOpen) {
-    pill.classList.add('upcoming');
-    text.textContent = 'registrations opening soon';
-  } else if (now > regClose) {
-    pill.classList.add('closed');
-    text.textContent = 'registrations closed';
-  } else {
-    text.textContent = 'registrations open';
-  }
-})();
-
 // ============ Hero countdown ============
 (function () {
   const target = new Date('2026-09-06T00:00:00');
