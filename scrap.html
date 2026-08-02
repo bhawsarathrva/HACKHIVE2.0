@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MyHackathon | Clone Starter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --yellow:#FFC241;
+    --orange:#F7A609;
+    --orange-dark:#E99A00;
+    --black:#000000;
+    --dark1:#0a0a0a;
+    --dark2:#111111;
+    --dark3:#151515;
+    --cream-text:#FFDA6D;
+    --grey-text:#999999;
+    --white:#ffffff;
+    --radius:16px;
+    --container:1180px;
+    font-family:'Poppins',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--yellow);color:#000;line-height:1.5;overflow-x:hidden;}
+  .code-font{font-family:'Fira Code',monospace;}
+  .container{max-width:var(--container);margin:0 auto;padding:0 24px;}
+
+  /* NAVBAR */
+  .navbar{
+    position:fixed;top:16px;left:50%;transform:translateX(-50%);
+    width:min(1180px,92%);
+    background:var(--black);
+    border-radius:50px;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:12px 24px;
+    z-index:100;
+  }
+  .navbar .logo{color:var(--yellow);font-weight:700;font-size:15px;}
+  .navbar ul{list-style:none;display:flex;gap:28px;}
+  .navbar ul a{color:#fff;text-decoration:none;font-size:14px;opacity:.85;}
+  .navbar ul a:hover{opacity:1;color:var(--yellow);}
+  .navbar .cube{width:34px;height:34px;background:var(--dark2);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--yellow);}
+  .nav-toggle{display:none;background:none;border:none;color:#fff;font-size:22px;cursor:pointer;}
+
+  /* HERO */
+  .hero{padding:150px 0 60px;text-align:center;}
+  .hero .partners{display:flex;justify-content:center;align-items:center;gap:16px;margin-bottom:40px;font-weight:600;}
+  .hero .partners img{width:60px;height:60px;border-radius:50%;background:#fff;object-fit:contain;}
+  .hero h1.title{
+    font-size:clamp(60px,12vw,140px);
+    font-weight:800;
+    line-height:0.9;
+    letter-spacing:-2px;
+  }
+  .hero h1.title .accent{color:var(--orange);}
+  .hero .tagline{font-size:15px;margin:24px 0;font-weight:600;}
+  .hero .meta{display:flex;justify-content:center;gap:24px;font-weight:600;margin-bottom:24px;flex-wrap:wrap;}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    background:#fff;color:#000;border:none;
+    padding:14px 28px;border-radius:50px;font-weight:600;
+    cursor:pointer;text-decoration:none;
+  }
+  .socials{display:flex;justify-content:center;gap:18px;margin-top:20px;font-size:20px;}
+
+  /* SPONSOR STRIP */
+  .sponsor-strip{background:var(--dark2);padding:60px 0;}
+  .sponsor-strip .label{color:var(--yellow);text-align:center;margin-bottom:24px;font-weight:600;}
+  .sponsor-strip .logos{display:flex;justify-content:center;gap:40px;flex-wrap:wrap;}
+  .sponsor-strip .logos > div{background:#fff;border-radius:12px;padding:20px 32px;min-width:200px;text-align:center;}
+
+  /* DARK SECTION BASE */
+  .section-dark{background:var(--dark1);color:#fff;padding:100px 0;}
+  .section-title{
+    font-size:34px;font-weight:700;margin-bottom:40px;
+  }
+  .section-title .accent{color:var(--orange);}
+
+  /* ABOUT */
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;}
+  .about-grid p{color:#ccc;margin-bottom:16px;}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:60px;text-align:center;}
+  .stats .num{font-size:44px;font-weight:800;color:var(--orange);text-shadow:0 0 24px rgba(247,166,9,.6);}
+  .stats .label{color:#bbb;margin-top:6px;font-size:14px;}
+
+  /* MARQUEE */
+  .marquee{background:var(--dark3);padding:20px 0;overflow:hidden;white-space:nowrap;border-top:1px solid #222;border-bottom:1px solid #222;}
+  .marquee span{display:inline-block;padding:0 20px;color:#777;font-weight:600;animation:scroll 20s linear infinite;}
+  @keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+  /* TRACKS */
+  .tracks-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;text-align:center;}
+  .hexagon{
+    width:120px;height:120px;margin:0 auto 16px;
+    background:rgba(247,166,9,.15);border:2px solid var(--orange);
+    clip-path:polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    display:flex;align-items:center;justify-content:center;font-size:32px;color:var(--orange);
+  }
+  .tracks-grid .track-name{color:var(--orange);font-weight:600;}
+
+  /* JOIN US CARDS */
+  .join-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:20px;}
+  .join-grid .card{
+    background:var(--dark2);border:1px solid #262626;border-radius:var(--radius);
+    padding:30px 20px;text-align:center;font-weight:600;transition:.2s;cursor:pointer;
+  }
+  .join-grid .card:hover{border-color:var(--orange);transform:translateY(-4px);}
+
+  /* SPONSORS PAGE STYLE SECTION */
+  .sponsor-card{background:var(--dark2);border-radius:var(--radius);padding:40px;margin-bottom:24px;}
+  .sponsor-card img{max-height:50px;margin-bottom:20px;}
+  .sponsor-card p{color:#bbb;}
+
+  /* TIMELINE (yellow bg) */
+  .timeline-section{background:var(--yellow);padding:100px 0;}
+  .timeline-section .section-title{color:#000;}
+  .timeline-item{
+    background:#fff;border-radius:14px;padding:20px 26px;max-width:320px;
+    margin-bottom:20px;box-shadow:0 6px 0 rgba(0,0,0,.08);
+  }
+  .timeline-item .date{font-weight:700;}
+  .timeline-item .desc{color:#555;}
+
+  /* FAQ */
+  .faq-item{
+    background:var(--dark2);border-radius:12px;padding:20px 24px;
+    margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;
+    cursor:pointer;font-weight:600;
+  }
+  .faq-item .plus{color:var(--orange);font-size:20px;}
+  .faq-answer{max-height:0;overflow:hidden;color:#aaa;transition:max-height .3s ease;padding:0 24px;}
+  .faq-answer.open{max-height:200px;padding:10px 24px 20px;}
+
+  /* FOOTER */
+  footer{background:var(--dark1);color:#fff;padding:80px 0 30px;}
+  .footer-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:40px;}
+  .footer-grid h3{margin-bottom:16px;}
+  .footer-grid a{display:block;color:#bbb;text-decoration:none;margin-bottom:10px;}
+  .footer-grid a:hover{color:var(--orange);}
+  .footer-bottom{text-align:center;color:#777;margin-top:60px;border-top:1px solid #222;padding-top:20px;font-size:13px;}
+
+  /* TEAM CARD (for a separate team.html page) */
+  .team-card{background:var(--dark2);border-radius:14px;overflow:hidden;text-align:left;}
+  .team-card .photo{width:100%;height:220px;background:#222;}
+  .team-card .info{padding:16px;display:flex;justify-content:space-between;align-items:center;}
+  .team-card .role{color:var(--orange);font-size:13px;text-transform:uppercase;padding:16px 16px 0;}
+
+  @media(max-width:900px){
+    .navbar ul{display:none;}
+    .nav-toggle{display:block;}
+    .about-grid, .tracks-grid, .footer-grid{grid-template-columns:1fr;}
+    .stats{grid-template-columns:repeat(2,1fr);}
+  }
+</style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <nav class="navbar">
+    <div class="logo">yourbrand</div>
+    <ul>
+      <li><a href="#about">about</a></li>
+      <li><a href="#timeline">timeline</a></li>
+      <li><a href="#sponsors">sponsors</a></li>
+      <li><a href="#team">team</a></li>
+      <li><a href="#join">join us</a></li>
+    </ul>
+    <div class="cube">◆</div>
+    <button class="nav-toggle">☰</button>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="container">
+      <div class="partners">
+        <img src="https://via.placeholder.com/60" alt="partner logo">
+        <div>Your University / Organizer Name<br><small style="font-weight:400">City, Country</small></div>
+        <img src="https://via.placeholder.com/60" alt="partner logo">
+      </div>
+      <h1 class="title">HACK<span class="accent">A</span>THON</h1>
+      <p class="tagline">#build #ship #inspire</p>
+      <div class="meta">
+        <span>📅 Month Day-Day</span>
+        <span>📍 Your City</span>
+      </div>
+      <a href="#" class="btn">💬 Join Discord</a>
+      <div class="socials">
+        <a href="#">📷</a><a href="#">in</a><a href="#">𝕏</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- SPONSOR STRIP -->
+  <section class="sponsor-strip">
+    <div class="container">
+      <p class="label code-font">// our sponsors</p>
+      <div class="logos">
+        <div>Sponsor Logo</div>
+        <div>Sponsor Logo</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section-dark" id="about">
+    <div class="container">
+      <h2 class="section-title code-font">import <span class="accent">about;</span></h2>
+      <div class="about-grid">
+        <div>
+          <p>Write 2-3 short paragraphs here describing who you are, what your event is about, and why people should join. Keep it friendly and in your own words.</p>
+        </div>
+        <div class="stats">
+          <div><div class="num">0+</div><div class="label">registrations</div></div>
+          <div><div class="num">0+</div><div class="label">partners</div></div>
+          <div><div class="num">0+</div><div class="label">mentors</div></div>
+          <div><div class="num">0+</div><div class="label">cities</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee">
+    <span>yourbrand &nbsp; yourbrand &nbsp; yourbrand &nbsp; yourbrand &nbsp; yourbrand &nbsp; yourbrand &nbsp;</span>
+  </div>
+
+  <!-- TRACKS / PRIZES -->
+  <section class="section-dark">
+    <div class="container">
+      <h2 class="section-title code-font">$ git commit <span class="accent">tracks;</span></h2>
+      <div class="tracks-grid">
+        <div><div class="hexagon">🤖</div><div class="track-name">AI & Machine Learning</div></div>
+        <div><div class="hexagon">⛓️</div><div class="track-name">Blockchain & Web3</div></div>
+        <div><div class="hexagon">📟</div><div class="track-name">IoT & Embedded</div></div>
+        <div><div class="hexagon">🥽</div><div class="track-name">AR / VR</div></div>
+        <div><div class="hexagon">☁️</div><div class="track-name">Cloud & DevOps</div></div>
+        <div><div class="hexagon">💡</div><div class="track-name">Open Track</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- JOIN US -->
+  <section class="section-dark" id="join">
+    <div class="container">
+      <h2 class="section-title">let's be a part<span class="accent">;</span></h2>
+      <div class="join-grid">
+        <div class="card">Sponsor</div>
+        <div class="card">Evangelist</div>
+        <div class="card">Community Partner</div>
+        <div class="card">Judge</div>
+        <div class="card">Mentor</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPONSORS DETAIL -->
+  <section class="section-dark" id="sponsors">
+    <div class="container">
+      <h2 class="section-title">our sponsors<span class="accent">;</span></h2>
+      <div class="sponsor-card">
+        <img src="https://via.placeholder.com/150x50" alt="sponsor logo">
+        <p>Short description of this sponsor goes here, written in your own words.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section class="timeline-section" id="timeline">
+    <div class="container">
+      <h2 class="section-title code-font">import <span class="accent">timeline;</span></h2>
+      <div class="timeline-item"><div class="date">Month Day</div><div class="desc">Registration opens</div></div>
+      <div class="timeline-item"><div class="date">Month Day</div><div class="desc">Event begins</div></div>
+      <div class="timeline-item"><div class="date">Month Day</div><div class="desc">Event ends</div></div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section-dark">
+    <div class="container">
+      <h2 class="section-title code-font">$ sudo <span class="accent">FAQs;</span></h2>
+      <div class="faq">
+        <div class="faq-item" onclick="toggleFaq(this)">Can beginners participate? <span class="plus">+</span></div>
+        <div class="faq-answer">Yes! Absolutely — write your real answer here.</div>
+
+        <div class="faq-item" onclick="toggleFaq(this)">What is the team size limit? <span class="plus">+</span></div>
+        <div class="faq-answer">Write your real answer here.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h3>more info</h3>
+          <a href="#">code of conduct</a>
+          <a href="#">community guidelines</a>
+          <a href="#">become a sponsor</a>
+        </div>
+        <div>
+          <h3>contact</h3>
+          <a href="mailto:you@example.com">you@example.com</a>
+          <a href="#">Your City, Country</a>
+        </div>
+        <div>
+          <h3>follow</h3>
+          <a href="#">Instagram</a>
+          <a href="#">LinkedIn</a>
+          <a href="#">X / Twitter</a>
+        </div>
+      </div>
+      <div class="footer-bottom">© 2026 Your Event Name. All rights reserved.</div>
+    </div>
+  </footer>
+
+<script>
+  function toggleFaq(el){
+    const answer = el.nextElementSibling;
+    answer.classList.toggle('open');
+    el.querySelector('.plus').textContent = answer.classList.contains('open') ? '−' : '+';
+  }
+  document.querySelector('.nav-toggle').addEventListener('click', ()=>{
+    document.querySelector('.navbar ul').classList.toggle('show');
+  });
+</script>
+</body>
+</html>
