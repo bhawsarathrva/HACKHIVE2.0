@@ -146,8 +146,12 @@ body.custom-cursor-active, body.custom-cursor-active *{ cursor:none !important; 
   line-height:.86;
   letter-spacing:-2px;
   text-align:center;
+  text-shadow:1px 1px 0 var(--gold-deep), 2px 2px 0 var(--gold-deep), 3px 4px 6px rgba(0,0,0,.25);
 }
-.headline .accent{ color:var(--gold-deep); }
+.headline .accent{
+  color:var(--gold-deep);
+  text-shadow:1px 1px 0 rgba(0,0,0,.2), 2px 2px 0 rgba(0,0,0,.12), 3px 4px 6px rgba(0,0,0,.2);
+}
 .headline-grid{
   display:inline-grid;
   grid-template-columns:auto auto auto;
@@ -415,12 +419,31 @@ body.custom-cursor-active, body.custom-cursor-active *{ cursor:none !important; 
 /* ============ TEAM ============ */
 .team{ background:var(--dark); padding:70px 6vw; }
 .team h2{ text-align:center; font-family:'Baloo 2'; font-weight:800; font-size:clamp(22px,3vw,32px); color:#eee; margin-bottom:50px; }
-.team-row{ display:flex; flex-wrap:wrap; gap:34px; justify-content:center; }
-.team-card{ width:260px; background:var(--card); border-radius:8px; overflow:hidden; transition:transform .2s ease; }
+.team-row{ display:flex; flex-wrap:wrap; gap:44px 30px; justify-content:center; }
+.team-card{ width:200px; text-align:center; transition:transform .25s ease; }
+.team-card:nth-child(even){ margin-top:58px; }
 .team-card:hover{ transform:translateY(-6px); }
-.team-card .role{ display:block; font-family:'Baloo 2'; font-weight:700; color:var(--gold); padding:16px 18px 6px; font-size:18px; }
-.team-card .photo{ height:250px; background:linear-gradient(160deg,#2a2a2a,#1a1a1a); }
-.team-card .name-row{ display:flex; justify-content:space-between; align-items:center; padding:12px 18px; font-weight:600; }
+.team-card .role{
+  display:block; font-family:'Baloo 2'; font-weight:700; color:var(--gold);
+  font-size:14px; margin-bottom:12px;
+}
+.team-card .photo{
+  position:relative; width:190px; height:190px; margin:0 auto 14px;
+  background:var(--gold);
+  clip-path:polygon(25% 0%,75% 0%,100% 50%,75% 100%,25% 100%,0% 50%);
+  transition:transform .25s ease;
+}
+.team-card .photo-inner{
+  position:absolute; inset:5px;
+  background:linear-gradient(160deg,#2a2a2a,#1a1a1a);
+  clip-path:polygon(25% 0%,75% 0%,100% 50%,75% 100%,25% 100%,0% 50%);
+}
+.team-card .photo-inner img{ width:100%; height:100%; object-fit:cover; display:block; }
+.team-card:hover .photo{ transform:scale(1.05); }
+.team-card .name-row{
+  display:flex; justify-content:center; align-items:center; gap:8px;
+  font-weight:600; font-size:14px;
+}
 .team-card .name-row a{ color:var(--gold); font-weight:700; }
 .team-page{ padding-top:56px; }
 .team-group-title{
