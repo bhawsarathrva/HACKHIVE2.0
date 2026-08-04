@@ -17,47 +17,98 @@ window.addEventListener('scroll', () => {
   scrollTopBtn?.classList.toggle('visible', window.scrollY > 400);
 }, { passive: true });
 
-// ============ Custom cursor ============
+// ============ Smooth Bee Cursor (No Trail) ============
 (function () {
   if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
 
-  const dot = document.createElement('div');
-  dot.className = 'cursor-dot';
-  const ring = document.createElement('div');
-  ring.className = 'cursor-ring';
-  document.body.append(dot, ring);
+  // --- Bee cursor element ---
+  const bee = document.createElement('div');
+  bee.className = 'cursor-bee';
+  bee.innerHTML = '<img src="images/bee-cursor.png" alt="" draggable="false">';
+  document.body.appendChild(bee);
   document.body.classList.add('custom-cursor-active');
 
-  let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+  // --- Mouse & physics state ---
+  let mouseX = -200, mouseY = -200;
+  let beeX = -200, beeY = -200;
+  let prevBeeX = -200, prevBeeY = -200;
+  let currentTilt = 0;
+  let currentScale = 1;
+  let targetScale = 1;
+  let isVisible = false;
+  let isMouseDown = false;
 
+  // --- Mouse tracking ---
   window.addEventListener('mousemove', (e) => {
     mouseX = e.clientX;
     mouseY = e.clientY;
-    dot.style.left = mouseX + 'px';
-    dot.style.top = mouseY + 'px';
-    dot.style.opacity = '1';
-    ring.style.opacity = '1';
-  });
+
+    if (!isVisible) {
+      isVisible = true;
+      bee.style.opacity = '1';
+      beeX = mouseX;
+      beeY = mouseY;
+      prevBeeX = mouseX;
+      prevBeeY = mouseY;
+    }
+  }, { passive: true });
 
   document.addEventListener('mouseleave', () => {
-    dot.style.opacity = '0';
-    ring.style.opacity = '0';
+    isVisible = false;
+    bee.style.opacity = '0';
   });
 
-  function trackRing() {
-    ringX += (mouseX - ringX) * 0.15;
-    ringY += (mouseY - ringY) * 0.15;
-    ring.style.left = ringX + 'px';
-    ring.style.top = ringY + 'px';
-    requestAnimationFrame(trackRing);
+  // --- Interactive element hover states ---
+  const interactiveSelector = 'a, button, input, textarea, select, [role="button"], .btn, .nav-links li, .card, .sponsor-card, .faq-question';
+
+  document.addEventListener('mouseover', (e) => {
+    if (e.target.closest(interactiveSelector)) {
+      targetScale = 1.15;
+    }
+  }, { passive: true });
+
+  document.addEventListener('mouseout', (e) => {
+    if (e.target.closest(interactiveSelector)) {
+      targetScale = 1.0;
+    }
+  }, { passive: true });
+
+  document.addEventListener('mousedown', () => {
+    isMouseDown = true;
+    targetScale = 0.9;
+  });
+
+  document.addEventListener('mouseup', () => {
+    isMouseDown = false;
+    targetScale = 1.0;
+  });
+
+  // --- Butter-smooth physics loop ---
+  function render() {
+    if (isVisible) {
+      // Smooth organic gliding follow (tuned lerp for fluid flight)
+      prevBeeX = beeX;
+      prevBeeY = beeY;
+      beeX += (mouseX - beeX) * 0.22;
+      beeY += (mouseY - beeY) * 0.22;
+
+      const dx = beeX - prevBeeX;
+
+      // Smooth banking flight tilt
+      const targetTilt = Math.max(-24, Math.min(24, dx * 2.4));
+      currentTilt += (targetTilt - currentTilt) * 0.16;
+
+      // Smooth scale interpolation
+      currentScale += (targetScale - currentScale) * 0.2;
+
+      // GPU transform update
+      bee.style.transform = `translate3d(${beeX.toFixed(2)}px, ${beeY.toFixed(2)}px, 0) scale(${currentScale.toFixed(3)}) rotate(${currentTilt.toFixed(2)}deg)`;
+    }
+
+    requestAnimationFrame(render);
   }
-  trackRing();
 
-  const hoverTargets = 'a, button, .tile, .track-card, .prize-card, .sp-box, .team-card, .status-pill, .count-box, .faq-item summary';
-  document.querySelectorAll(hoverTargets).forEach((el) => {
-    el.addEventListener('mouseenter', () => ring.classList.add('hover'));
-    el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
-  });
+  requestAnimationFrame(render);
 })();
 
 // ============ Hero countdown ============
