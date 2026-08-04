@@ -223,39 +223,45 @@ function Hero() {
       id="home"
       className="relative min-h-screen w-full flex flex-col justify-between items-center px-4 pt-16 pb-10 overflow-hidden select-none"
       style={{
-        backgroundColor: "#f3b232",
-        backgroundImage: `
-          repeating-linear-gradient(45deg, rgba(0,0,0,0.04) 0 1px, transparent 1px 40px),
-          repeating-linear-gradient(-45deg, rgba(0,0,0,0.04) 0 1px, transparent 1px 40px)
-        `,
+        backgroundColor: "#ffffff",
+        backgroundImage: "url(images/gemini-svg.svg)",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
         color: "#0e0e0e",
       }}
     >
       {/* Background dots pattern top left */}
       <div
         aria-hidden="true"
-        className="absolute top-6 left-6 w-56 h-32 pointer-events-none opacity-20"
+        className="absolute top-6 left-6 w-56 h-32 pointer-events-none opacity-30"
         style={{
-          backgroundImage: "radial-gradient(#000 2px, transparent 2px)",
+          backgroundImage: "radial-gradient(#d98b18 2px, transparent 2px)",
           backgroundSize: "14px 14px",
         }}
       />
 
-      {/* Top Header Row: DAVV Logo - University Text - SDSF Logo */}
-      <div className="w-full max-w-4xl mx-auto flex items-center justify-center gap-4 md:gap-8 z-10">
-        <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-white shadow-md border-2 border-black/10 flex items-center justify-center overflow-hidden flex-shrink-0">
+      {/* Top Header Row: HackHive Logo - DAVV Logo - University Text - SDSF Logo */}
+      <div className="w-full max-w-4xl mx-auto flex items-center justify-center gap-3 md:gap-6 z-10 flex-nowrap px-3">
+        <a href="#home" className="flex-shrink-0">
+          <img
+            src="images/hack%20hive%202.0%20logo.png"
+            alt="HackHive 2.0"
+            className="h-16 sm:h-20 md:h-24 w-auto object-contain"
+          />
+        </a>
+        <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 rounded-full bg-white shadow-md border-2 border-black/10 flex items-center justify-center overflow-hidden flex-shrink-0">
           <img
             src="images/davv_logo.png"
             alt="DAVV Logo"
             className="w-full h-full object-cover rounded-full"
           />
         </div>
-        <div className="text-center font-mono font-bold text-xs sm:text-sm md:text-base leading-tight" style={{ color: "#0e0e0e" }}>
+        <div className="text-center font-mono font-bold text-xs sm:text-sm md:text-base leading-tight min-w-0 flex-1" style={{ color: "#0e0e0e" }}>
           <p className="tracking-tight">School of Data Science and Forecasting, DAVV</p>
           <p className="font-normal text-xs md:text-sm mt-0.5">Devi Ahilya VishwaVidhyalaya,</p>
           <p className="font-normal text-xs md:text-sm">Indore</p>
         </div>
-        <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-white shadow-md border-2 border-black/10 flex items-center justify-center overflow-hidden flex-shrink-0">
+        <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 rounded-full bg-white shadow-md border-2 border-black/10 flex items-center justify-center overflow-hidden flex-shrink-0">
           <img
             src="images/sdsf_logo.png"
             alt="SDSF Logo"

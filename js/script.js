@@ -126,3 +126,172 @@ function renderCountdown() {
 }
 renderCountdown();
 setInterval(renderCountdown, 60000);
+
+// ============ Interactive Honeycomb Canvas ============
+(function () {
+  const canvas = document.getElementById('honeycombCanvas');
+  if (!canvas) return;
+  const hero = canvas.closest('.hero');
+  if (!hero) return;
+  const ctx = canvas.getContext('2d');
+
+  // Hex geometry
+  const HEX_RADIUS = 28;         // flat-top radius
+  const GAP = 5;                  // space between hexagons
+  const R = HEX_RADIUS + GAP;
+  const GLOW_RADIUS = 180;       // cursor influence radius in px
+
+  // Mouse tracking (relative to hero)
+  let mouseX = -9999, mouseY = -9999;
+  let smoothX = -9999, smoothY = -9999;
+  let isInsideHero = false;
+
+  hero.addEventListener('mousemove', (e) => {
+    const rect = hero.getBoundingClientRect();
+    mouseX = e.clientX - rect.left;
+    mouseY = e.clientY - rect.top;
+    isInsideHero = true;
+  });
+  hero.addEventListener('mouseleave', () => {
+    isInsideHero = false;
+  });
+
+  // Precompute hex corner offsets (flat-top)
+  const corners = [];
+  for (let i = 0; i < 6; i++) {
+    const angle = (Math.PI / 3) * i;
+    corners.push({ x: Math.cos(angle) * HEX_RADIUS, y: Math.sin(angle) * HEX_RADIUS });
+  }
+
+  // Draw a single hexagon
+  function drawHex(cx, cy) {
+    ctx.beginPath();
+    ctx.moveTo(cx + corners[0].x, cy + corners[0].y);
+    for (let i = 1; i < 6; i++) {
+      ctx.lineTo(cx + corners[i].x, cy + corners[i].y);
+    }
+    ctx.closePath();
+  }
+
+  // Sizing
+  let W, H, hexCenters = [];
+
+  function resize() {
+    const dpr = window.devicePixelRatio || 1;
+    W = hero.offsetWidth;
+    H = hero.offsetHeight;
+    canvas.width = W * dpr;
+    canvas.height = H * dpr;
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    buildGrid();
+  }
+
+  function buildGrid() {
+    hexCenters = [];
+    // flat-top hex tiling
+    const colW = R * 1.5;
+    const rowH = R * Math.sqrt(3);
+    const cols = Math.ceil(W / colW) + 2;
+    const rows = Math.ceil(H / rowH) + 2;
+    for (let col = -1; col < cols; col++) {
+      for (let row = -1; row < rows; row++) {
+        const cx = col * colW;
+        const cy = row * rowH + (col % 2 === 0 ? 0 : rowH * 0.5);
+        hexCenters.push({ x: cx, y: cy });
+      }
+    }
+  }
+
+  // Color helpers
+  const BASE_STROKE = 'rgba(217, 139, 24, 0.18)';
+  const BASE_FILL = 'rgba(239, 169, 58, 0.04)';
+
+  function render() {
+    // Smooth mouse following
+    if (isInsideHero) {
+      smoothX += (mouseX - smoothX) * 0.18;
+      smoothY += (mouseY - smoothY) * 0.18;
+    } else {
+      smoothX += (-9999 - smoothX) * 0.06;
+      smoothY += (-9999 - smoothY) * 0.06;
+    }
+
+    ctx.clearRect(0, 0, W, H);
+
+    // Subtle warm gradient backdrop
+    const bgGrad = ctx.createLinearGradient(0, 0, W, H);
+    bgGrad.addColorStop(0, '#ffffff');
+    bgGrad.addColorStop(0.5, '#fffdf7');
+    bgGrad.addColorStop(1, '#fdf8ed');
+    ctx.fillStyle = bgGrad;
+    ctx.fillRect(0, 0, W, H);
+
+    const glowR2 = GLOW_RADIUS * GLOW_RADIUS;
+
+    for (let i = 0; i < hexCenters.length; i++) {
+      const { x: cx, y: cy } = hexCenters[i];
+
+      // Distance from smooth cursor
+      const dx = cx - smoothX;
+      const dy = cy - smoothY;
+      const dist2 = dx * dx + dy * dy;
+
+      // Proximity factor (0 = far, 1 = right on cursor)
+      let proximity = 0;
+      if (dist2 < glowR2) {
+        proximity = 1 - Math.sqrt(dist2) / GLOW_RADIUS;
+        proximity = proximity * proximity; // ease-in for smoother falloff
+      }
+
+      drawHex(cx, cy);
+
+      // Fill: base subtle + golden glow when near cursor
+      if (proximity > 0.01) {
+        const fillAlpha = 0.04 + proximity * 0.4;
+        const r = Math.round(239 + (255 - 239) * proximity);
+        const g = Math.round(169 + (226 - 169) * proximity * 0.6);
+        const b = Math.round(58 - 20 * proximity);
+        ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${fillAlpha})`;
+      } else {
+        ctx.fillStyle = BASE_FILL;
+      }
+      ctx.fill();
+
+      // Stroke
+      if (proximity > 0.01) {
+        const strokeAlpha = 0.18 + proximity * 0.7;
+        ctx.strokeStyle = `rgba(217, 139, 24, ${strokeAlpha})`;
+        ctx.lineWidth = 1 + proximity * 1.2;
+      } else {
+        ctx.strokeStyle = BASE_STROKE;
+        ctx.lineWidth = 1;
+      }
+      ctx.stroke();
+
+      // Inner glow highlight on closest hexagons
+      if (proximity > 0.4) {
+        drawHex(cx, cy);
+        const glowAlpha = (proximity - 0.4) * 0.5;
+        const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, HEX_RADIUS);
+        grad.addColorStop(0, `rgba(255, 220, 100, ${glowAlpha})`);
+        grad.addColorStop(1, `rgba(239, 169, 58, 0)`);
+        ctx.fillStyle = grad;
+        ctx.fill();
+      }
+    }
+
+    requestAnimationFrame(render);
+  }
+
+  // Use ResizeObserver for responsive resizing
+  if (typeof ResizeObserver !== 'undefined') {
+    new ResizeObserver(() => resize()).observe(hero);
+  } else {
+    window.addEventListener('resize', resize);
+  }
+
+  resize();
+  requestAnimationFrame(render);
+})();
