@@ -485,6 +485,11 @@ ul{ list-style:none; margin:0; padding:0; }
   .sp-grid{ grid-template-columns:repeat(2,1fr); }
   .ag-bee{ width:46px; top:-26px; right:6%; }
 }
+@media (max-width:700px){
+  .hex-row{ flex-direction:column; align-items:stretch; }
+  .prize-card--featured,
+  .prize-card--featured:hover{ transform:none; padding-top:34px; padding-bottom:26px; }
+}
 
 @media (prefers-reduced-motion: reduce){
   html{ scroll-behavior:auto; }

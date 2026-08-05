@@ -19,7 +19,7 @@ window.addEventListener('scroll', () => {
 
 // ============ Hero countdown ============
 (function () {
-  const target = new Date('2026-09-06T00:00:00');
+  const target = new Date('2026-08-31T23:59:00');
   const els = {
     days: document.getElementById('cdDays'),
     hours: document.getElementById('cdHours'),
@@ -66,7 +66,7 @@ revealTargets.forEach(el => observer.observe(el));
 // ============ Countdown ============
 // Set HACKATHON_START to a future date to enable a live countdown.
 // While it is null / in the past, the "hackathon coming soon" state is shown.
-const HACKATHON_START = new Date('2026-09-06T00:00:00');
+const HACKATHON_START = new Date('2026-08-31T23:59:00');
 const countdownEl = document.getElementById('countdownText');
 
 function renderCountdown() {
