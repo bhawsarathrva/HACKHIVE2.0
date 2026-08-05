@@ -24,9 +24,14 @@ window.addEventListener('scroll', () => {
   const bee = document.createElement('div');
   bee.className = 'cursor-bee';
   const img = document.createElement('img');
-  img.src = 'images/bee-cursor.png';
   img.alt = 'bee cursor';
   img.draggable = false;
+  img.onerror = () => {
+    console.warn('[cursor-bee] failed to load ' + img.src + ' — serve this site over http(s), not as a double-clicked file:// page.');
+    bee.remove();
+    document.body.classList.remove('custom-cursor-active');
+  };
+  img.src = 'images/bee-cursor.png';
   bee.appendChild(img);
   document.body.appendChild(bee);
   document.body.classList.add('custom-cursor-active');
