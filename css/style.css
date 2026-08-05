@@ -93,10 +93,7 @@ ul{ list-style:none; margin:0; padding:0; }
 /* ============ HERO ============ */
 .hero{
   position:relative;
-  background:var(--gold);
-  background-image:
-    repeating-linear-gradient(45deg, rgba(0,0,0,.05) 0 1px, transparent 1px 46px),
-    repeating-linear-gradient(-45deg, rgba(0,0,0,.05) 0 1px, transparent 1px 46px);
+  background:#fdfaf3;
   color:#111;
   padding:34px 6vw 46px;
   overflow:hidden;
@@ -113,12 +110,17 @@ ul{ list-style:none; margin:0; padding:0; }
           mask-image:linear-gradient(120deg, #000 30%, transparent 80%);
   pointer-events:none;
 }
-.school-row{ display:flex; align-items:center; justify-content:center; gap:28px; margin-bottom:8px; }
-.school-badge{ width:116px; height:116px; border-radius:50%; background:#fff; flex-shrink:0; box-shadow:0 2px 8px rgba(0,0,0,.15); }
-.school-text{
-  font-family:'Space Mono',monospace; font-weight:700; text-align:center; font-size:30px; line-height:1.35;
+.school-row{ display:flex; align-items:center; justify-content:center; gap:clamp(10px,3vw,28px); margin-bottom:8px; }
+.school-badge{
+  width:clamp(48px,12vw,116px); height:clamp(48px,12vw,116px); border-radius:50%;
+  background:#fff; flex-shrink:0; box-shadow:0 2px 8px rgba(0,0,0,.15);
 }
-.school-text small{ display:block; font-weight:400; font-size:25px; }
+.school-text{
+  font-family:'Space Mono',monospace; font-weight:700; text-align:center;
+  font-size:clamp(14px,3.6vw,30px); line-height:1.35;
+  max-width:420px;
+}
+.school-text small{ display:block; font-weight:400; font-size:clamp(11px,3vw,25px); }
 
 .hero-main{ position:relative; margin-top:26px; text-align:center; }
 .hero-tags{
