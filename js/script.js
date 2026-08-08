@@ -144,6 +144,32 @@ setInterval(renderCountdown, 60000);
   let W = 0, H = 0;
   let hexCells = [];
 
+  // Circles (in canvas-local coords) where the honeycomb glow must never
+  // paint — keeps the DAVV / SDSF logo badges clear of the hover effect.
+  let logoZones = [];
+
+  function computeLogoZones() {
+    const rect = hero.getBoundingClientRect();
+    const badges = hero.querySelectorAll('.school-badge');
+    logoZones = Array.from(badges).map((el) => {
+      const r = el.getBoundingClientRect();
+      return {
+        x: r.left - rect.left + r.width / 2,
+        y: r.top - rect.top + r.height / 2,
+        radius: Math.max(r.width, r.height) / 2 + 6
+      };
+    });
+  }
+
+  function isInLogoZone(x, y) {
+    for (let i = 0; i < logoZones.length; i++) {
+      const z = logoZones[i];
+      const dx = x - z.x, dy = y - z.y;
+      if (dx * dx + dy * dy < z.radius * z.radius) return true;
+    }
+    return false;
+  }
+
   function resizeCanvas() {
     const dpr = window.devicePixelRatio || 1;
     const rect = hero.getBoundingClientRect();
@@ -155,6 +181,7 @@ setInterval(renderCountdown, 60000);
     canvas.style.height = H + 'px';
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     buildGrid();
+    computeLogoZones();
   }
 
   function buildGrid() {
@@ -189,6 +216,16 @@ setInterval(renderCountdown, 60000);
     ctx.clearRect(0, 0, W, H);
 
     if (isMouseOverHero && mouseX > -100 && mouseY > -100) {
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(0, 0, W, H);
+      for (let i = 0; i < logoZones.length; i++) {
+        const z = logoZones[i];
+        ctx.moveTo(z.x + z.radius, z.y);
+        ctx.arc(z.x, z.y, z.radius, 0, Math.PI * 2, true);
+      }
+      ctx.clip('evenodd');
+
       const spotGrad = ctx.createRadialGradient(
         mouseX, mouseY, 10,
         mouseX, mouseY, GLOW_RADIUS * 1.3
@@ -198,6 +235,7 @@ setInterval(renderCountdown, 60000);
       spotGrad.addColorStop(1, 'rgba(239, 169, 58, 0)');
       ctx.fillStyle = spotGrad;
       ctx.fillRect(0, 0, W, H);
+      ctx.restore();
     }
 
     for (let i = 0; i < hexCells.length; i++) {
@@ -213,6 +251,8 @@ setInterval(renderCountdown, 60000);
       }
 
       cell.glow += (targetGlow - cell.glow) * (targetGlow > cell.glow ? 0.35 : 0.10);
+
+      if (isInLogoZone(cell.x, cell.y)) continue;
 
       drawHexagon(cell.x, cell.y);
 
