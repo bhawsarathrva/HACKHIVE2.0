@@ -18,8 +18,8 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 
 // ============ Hero countdown ============
+// Countdown is stopped (date postponed) — frozen at 00:00:00:00.
 (function () {
-  const target = new Date('2026-08-31T23:59:00');
   const els = {
     days: document.getElementById('cdDays'),
     hours: document.getElementById('cdHours'),
@@ -28,22 +28,7 @@ window.addEventListener('scroll', () => {
   };
   if (!els.days) return;
 
-  const pad = (n) => String(n).padStart(2, '0');
-
-  function tick() {
-    const diff = target - new Date();
-    if (diff <= 0) {
-      els.days.textContent = els.hours.textContent = els.minutes.textContent = els.seconds.textContent = '00';
-      return;
-    }
-    els.days.textContent = pad(Math.floor(diff / 86400000));
-    els.hours.textContent = pad(Math.floor((diff % 86400000) / 3600000));
-    els.minutes.textContent = pad(Math.floor((diff % 3600000) / 60000));
-    els.seconds.textContent = pad(Math.floor((diff % 60000) / 1000));
-  }
-
-  tick();
-  setInterval(tick, 1000);
+  els.days.textContent = els.hours.textContent = els.minutes.textContent = els.seconds.textContent = '00';
 })();
 
 // ============ Scroll reveal ============
